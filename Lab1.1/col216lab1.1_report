@@ -1,0 +1,204 @@
+										     COL-216 Lab-1.1	 Report
+										     *************************										  
+
+									Name: Madaka Jayaprakash
+									EntryNumber:2020CS10356
+
+*This lab Assignment is done with the use of legacy SWI Instructins.
+
+*It performs two operations one at each when required (case-sensitive lexicographic comparisions of two strings and case-insensitive)
+
+*This Program promps the user in stdout/stdin/stderr terminal to enter the required Strings at required Places
+
+*It also prompts the user to enter into required comparision between two strings 
+
+*All the values are to be entered in stdin
+
+*on entering 0 the program diverts to case-sensitive comparision between two strings.
+
+	Case-sensitive Comparision :
+	****************************
+		Algorithm used:
+			s1=input string 1
+			s2=input string 2
+			l1=length(s1)
+			l1=length(s2)
+			l=min(l1,l2)
+			for(i=0,i<l,i++){
+				if(s1[i]==s2[i]){
+					i++
+				}
+				if(anscii(s1[i])>anscii(s2[i])){
+					proceed to output case-2
+				}
+				if(anscii(s1[i])<anscii(s2[i])){
+					proceed to output case-1
+				}
+			}
+			if (l1==l2){
+				proceed to output case(Both are same strings)
+			}
+			if(l1>l2){
+				proceed to output case-2
+			}
+			if(l1<l2){
+				proceed to output case-1
+			}
+			
+			
+		Registers memory allocations:
+			
+			r2   :   Adress to the location of first string	(pointer to first string)
+			r3   :   Adress to the location of second string	(pointer to second string)
+			r4   :	 length of string 1
+			r5   :   length of string 2
+			r8   :   minimum of (r4,r5)
+			
+		Registers usage in helper functions
+		
+			stdin
+			r0   :  #2
+			r1   :  Adress to store input string
+			r2   :  maximum bytes to store (Given 100 as maximum value we can increase it in the program by editing code)
+			stdout
+			r0   :  #1
+			r1   :  Adress of the string to output
+			strlen
+			r0   :  adress to the string (outputs length of string in r0)
+			
+		NOTE: r1 and r2 are used for memory allocations after all complete usage in functins
+			(except stdout r1 and r2 can be changed )
+		
+		
+		SAMPLE TEST CASES AND THEIR OUTPUTS
+		
+		1. string 1 "HELLO"
+		   string 2 "HELLO"
+		   0
+		   
+		   output : both are same string
+		   expected:both are same string
+		2.string 1 "HELLO"
+		  string 2 "hello"
+		  0
+		  
+		  output  : string 1 is less than string 2
+		  expected: string 1 is less than string 2
+		3.string 1 "hello"
+		  string 2 "Hello"
+		  0
+		  
+		  output : string 1 is greater than string 2
+		  expected:string 1 is greater than string 2
+		4.string 1 "ab"
+		  string 2 "abcd"
+		  0
+		  
+		  output  : string 1 is less than string 2
+		  expected: string 1 is less than string 2
+		5.string 1 "Jayaprakash"
+		  string 2 "JayaPrakash"
+		  0
+		  
+		  output : string 1 is greater than string 2
+		  expected:string 1 is greater than string 2
+		6.string 1 "ab"
+		  string 2 "aacd"
+		  0
+		  
+		  output : string 1 is greater than string 2
+		  expected:string 1 is greater than string 2
+		  
+*on entering 1 the program diverts to case insensitive comparision between two strings
+		 
+	Case-insensitive Comparision :
+	****************************
+		Algorithm used:
+			s1=input string 1
+			s2=input string 2
+			l1=length(s1)
+			l1=length(s2)
+			l=min(l1,l2)
+			for(i=0,i<l,i++){
+				if(s1[i]==s2[i] and |anscii(s1[i])-anscii(s2[i])|=32){
+					i++
+				}
+				if(anscii(s1[i])>anscii(s2[i])){
+					proceed to output case-2
+				}
+				if(anscii(s1[i])<anscii(s2[i])){
+					proceed to output case-1
+				}
+			}
+			if (l1==l2){
+				proceed to output case(Both are same strings)
+			}
+			if(l1>l2){
+				proceed to output case-2
+			}
+			if(l1<l2){
+				proceed to output case-1
+			}
+			
+			
+		Registers memory allocations:
+			
+			r2   :   Adress to the location of first string	(pointer to first string)
+			r3   :   Adress to the location of second string	(pointer to second string)
+			r4   :	 length of string 1
+			r5   :   length of string 2
+			r8   :   minimum of (r4,r5)
+			r9   :   anscii(A)-anscii(a) (#32)
+		Registers usage in helper functions
+		
+			stdin
+			r0   :  #2
+			r1   :  Adress to store input string
+			r2   :  maximum bytes to store (Given 100 as maximum value we can increase it in the program by editing code)
+			stdout
+			r0   :  #1
+			r1   :  Adress of the string to output
+			strlen
+			r0   :  adress to the string (outputs length of string in r0)
+			
+		NOTE: r1 and r2 are used for memory allocations after all complete usage in functins
+			(except stdout r1 and r2 can be changed )
+		
+		
+		SAMPLE TEST CASES AND THEIR OUTPUTS
+		
+		1. string 1 "HELLO"
+		   string 2 "HELLO"
+		   1
+		   
+		   output : both are same string
+		   expected:both are same string
+		2.string 1 "HEllO"
+		  string 2 "heLlo"
+		  1
+		  
+		  output  : both are same string
+		   expected:both are same string
+		3.string 1 "Ab"
+		  string 2 "aacd"
+		  1
+		  
+		  output : string 1 is greater than string 2
+		  expected:string 1 is greater than string 2
+		4.string 1 "ab"
+		  string 2 "abcd"
+		  1
+		  
+		  output  : string 1 is less than string 2
+		  expected: string 1 is less than string 2
+		5.string 1 "Jayyam"
+		  string 2 "JayaPrakash"
+		  1
+		  
+		  output : string 1 is greater than string 2
+		  expected:string 1 is greater than string 2
+		  
+		  
+strln function is helper function which is taken from Usefulfunctions.s which is shared in Moodle		  
+		  
+		  						*END*
