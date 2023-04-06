@@ -1,0 +1,218 @@
+										     COL-216 Lab-1.2	 Report
+										     *************************										  
+
+									Name: Madaka Jayaprakash
+									EntryNumber:2020CS10356
+
+*This lab Assignment is done with the use of legacy SWI Instructins.
+
+* inputs are taken in stdin .
+
+* outputs are given in stdout.
+
+* This program is to merge two sorted list given in required comparision mode.
+
+* It is a multiple file program we need to load two files Helperfunctions.s and col216Lab1.2.s in ARMSimulator
+
+* It also removes duplicates of the entries when queried.
+
+* It prompts the user with inputs.
+
+* it prompts to enter the length of the list 1 and stores the length of list in memory location :length1
+		and next it uses  atoi function which os extracted from useful functions to convert ascii to integer.
+		it stores length2 in [sp,#0] location
+		
+* the elements are entered one after the other with the enter key pressing one after the other all the adresses of the elements which are sorted are stored in stack increasing upwards.
+		[sp,#-8],[sp,#-12],[sp,#-16],[sp,#-20],.....
+		But the strings are stored in list1 (which has limited memory of 25 we can increase if we want)
+		
+* it prompts to enter the length of the list 2 and stores the length of list in memory location :length2
+		and next it uses  atoi function which os extracted from useful functions to convert ascii to integer.
+		it stores length2 in [sp,#-4] location
+		
+* the elements are entered one after the other with the enter key pressing one after the other all the adresses of the elements which are sorted are stored in stack increasing downwards.
+		[sp,#4],[sp,#8],[sp,#12],[sp,#16],.....
+		But the strings are stored in list2 (which has limited memory of 25 we can increase if we want)
+		
+After storing all elements in both lists.
+
+*The program outputs	a message "All the entries are over see stack for adresses ".
+
+* The program promts the user with the type of comparision required ,
+			0 - case sensitive 
+			1 - case insensitive
+			
+And then it uses Helper functions of compare1 and compare2 to compare in given fashion respectively
+	
+		compare1,compare2 , slighly changed from lab report 1 :
+				in lab report 1 I just printed it to stdout now i am removing the input in stdin option and output in stdout option
+				* inputs are r0,- adress of 1 string
+				*  	     r1,- adress of 2 string
+				* outputs are r0, 0 if both are equal.
+					      r0, 1 if 1 string is larger
+					      r0, -1 if 1 string is smaller
+*Algorithm used to merge two sorted lists :
+
+		l1-length of list1
+		l2-length of list2
+		L1- List1
+		L2- List2
+		L - output list
+		i=0
+		j=0
+		k=0
+		if(l1 = 0) {
+			print L2
+		}
+		if(l2 =0 ) {
+			print L1
+		}
+		else{
+			while(i<l1 and j<l2){
+				if(L1[i]<L2[j]){
+					L[k]=L1[i]
+					k++
+					i++
+				}
+				else{
+					L[k]=L2[j]
+					k++
+					j++
+				}
+			}
+			print L
+		}
+		registers memeory allocations:
+			r0, adress lo merged list which contains adress of strings 
+			r1, length of the merged list
+			
+* Next the program prompts the user to remove duplicates.
+	on pressing 1 the program removes duplicates in list which are equal according to comparision fashion , if we want to remove in case isensitive fashion we ca just change the comparison 
+	
+* Algorithm to remove duplicates present in sorted lists :
+
+		l-length of list
+		i=0
+		j=0
+		L1 - inputlist
+		L  - outputlist
+		while(i<l){
+			if(L1[i]=L1[i+1]){
+				i++
+			}
+			else{
+				L1[i]=L[j]
+				i++
+				j++
+			}
+		}
+*	The outputs will be r0 has mergedlist or mergedlistr(after removing duplicates).
+			    r1 has the length of the merged list
+			    
+*	The program also outputs the merged list in stdout. 
+
+		
+		SAMPLE TEST CASES AND THEIR OUTPUTS
+		
+		1.length of list1 - 0
+		  length of list2 - 3
+		  entries in list 2
+		  	[a,b,c]
+		  comparision mode - 0 (case sensitive)
+		  remove duplicates- 0 ( No)
+		  output : [a,b,c]
+		2.length of list1 - 0
+		  length of list2 - 3
+		  entries in list 2
+		  	[a,a,b]
+		  comparision mode - 0 (case sensitive)
+		  remove duplicates- 1 (Yes)
+		  output : [a,b]
+		3.length of list1 - 3
+		  entries of list1
+		  	[a,b,c]
+		  length of list2 - 0
+		  comparision mode - 0 ( case sensitive)
+		  remove duplicates- 0 (No)
+		  output : [a,b,c]
+		4.length of list1 - 3
+		  entries of list1
+		  	[a,a,b]
+		  length of list2-0
+		  comparision mode - 0 (case sensitive)
+		  remove duplicates - 1 (Yes).
+		  output : [a,b]
+		 5.length of list1 - 5
+		   entries of list1
+		   	[a,b,c,d,e]
+		   length of list2 - 5
+		   entries of list2
+		   	[A,B,C,D]
+		   comparision mode - 0 (case sensitive)
+		   remove duplicates - 0 (No).
+		   output [A,B,C,D,E,a,b,c,d,e]
+		 6.length of list1 - 5
+		   entries of list1
+		   	[a,a,b,b,c]
+		   length of list2 - 5
+		   entries of list2
+		   	[A,A,B,B,C]
+		   comparision mode - 0 (case sensitive)
+		   remove duplicates -1 (yes).
+		   output : [A,B,C,a,b,c]
+		 7. length of list1 - 5
+		    entries of list1
+		    	[a,e,f,x,y]
+		    length of list2 - 5
+		    entries of list2
+		    	[b,i,m,n,p]
+		   comparision mode - 0 (case sensitive)
+		   remove duplicates - 0 (No).
+		   output :[a,b,e,f,i,m,n,p,x,y]
+		 8. length of list1 - 3
+		    entris of list1
+		    	[a,b,c]
+		    length of list2 - 3
+		    entries of list2
+		    	[A,B,C]
+		    comparision mode - 1 (case insensitive).
+		    remove duplicates - 0(No).
+		    output - [a,A,b,B,c,C].
+		  9.length of list1 - 3
+		    entris of list1
+		    	[A,B,C]
+		    length of list2 - 3
+		    entries of list2
+		    	[a,b,c]
+		    comparision mode - 1 (case insensitive).
+		    remove duplicates - 0(No).
+		    output - [A,a,B,b,C,c].
+		  10.length of list1 - 5
+		  	entries of list1
+		  		[a,a,b,b,c]
+		     length of list2 - 5
+		    	entries of list2
+		    		[A,A,B,B,C]
+		    comparision mode -1 (case insensitive)
+		    remove duplicates - 1(Yes)
+		    	output [A,B,C]
+		  11.length of list1 - 5
+		  	entries of list 1
+		  		[a,a,b,B,c]
+		     length of list2 -5 
+		     	entries of list 2
+		     		[A,a,b,b,e]
+		     comparision mode -1 (case insensitive)
+		    remove duplicates - 1(Yes)
+		     output: [a,b,c,e]
+		  12.length of list1 - 5
+		  	entries of list 1
+		  		[a,a,b,b,c]
+		     length of list2 -5 
+		     	entries of list 2
+		     		[A,a,B,B,E]
+		     comparision mode -1 (case insensitive)
+		    remove duplicates - 0 (No)
+		     output: 	[a,A,a,a,b,B,b,B,c,E]
+		    		
+		   				*END OF THE REPORT *
