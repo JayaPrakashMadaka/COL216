@@ -1,0 +1,225 @@
+  										     COL-216 Lab-1.3	 Report
+										     *************************										  
+
+									Name: Madaka Jayaprakash
+									EntryNumber:2020CS10356
+
+*This lab Assignment is done with the use of legacy SWI Instructins.
+
+* inputs are taken in stdin .
+
+* outputs are given in stdout.
+
+* Multiple Files needed to be loaded in armsim 
+		1.)col216Lab1.3.s
+		2.)col216Lab1.2.s
+		3.)Helper Functions.
+
+*This program is to sort a given list using merge sort algorithm 
+
+*Based on the comparision mode (ie., case sensitive or insensitive mode ) and an option to remove duplicates is provided in this program.
+
+The program prompts the user in giving the input,
+
+First, it asks for thr length of the list to be sorted 
+
+and then the elements of the list one by one is entered with pressing enter button .
+
+it prompts the user for the mode of comparision ( 0 for case sensitive and 1 for case insensitive )
+
+and then it prompts the user for the option of duplicate removal (0 for No 1 for Yes).
+
+The algorithm uses merging of two lists by the respective comparision mode.
+
+		Merging of two lists Lab1.2 : changes are made for the convinience of assignment 
+		
+		The stdin and stdout options are removed and the inputs taken are 
+		r0	:	pointer to list1
+		r3	:	pointer to list2
+		r2	:	length of list1
+		r3	:	length of list2
+		
+		Outputs given by merge list is
+		
+		r0	:	pointer to merged list
+		r1	:	length of the merged list
+		
+		These are the changes made for Lab1.2 convinience in code.
+
+This algorithm uses O(nlog(n)) space for algorithm to perform so, if there is insufficient space for the lists  just increase the .space commands in the code.
+		
+The Algorithm used for The Merge Sort Algorithm : ( considering we have merge list and comparision of two strings Algorithms )
+
+		fun copy(pointer i, int n ,pointer k,L1,L2)){
+			//it copies the list of entries from pointer i to k of length n and updates k
+			for(int x=i;x<i+n;x++){
+				L1[x]=L2[k]
+				k++
+			}
+		}
+			
+			
+		//l=length of list
+		//L = input List(array more than O(l(log(l))) space)	
+		i=0;
+		j=i+1;
+		n=1;
+		m=1;
+		k=len(L);	
+		
+		
+		sort(int i , int j,int k , int n int m , L){
+			//extreme case in every situation.
+			if(i=k){
+				sort(k,k+2*n,2*n,2*m,L);
+			}
+			//case1
+			if(k-j>=m){
+				copy(i,2*n,k,Merge(L[i:n],L[j:n]),L);
+				if(2n>=l){
+					given merged sort list is from L[k]
+				}
+				i+=n;
+				j+=n;
+				sort(i,j,k,n,m,L);
+			}
+			//case2
+			if(j>=k){
+				copy(i,k-i,k,L,L);
+				i=k;
+			}
+			//case3
+			else{
+				Merge(L[i:n],L[j:k-j]);
+				copy(0,n+k-j,k,Merge(L[i:n],L[j:k-j]),L);
+				i=k;
+			}
+		}
+		
+		**This Algorithm first merges two single elemenets in every pair and then recursively  merges elements of lenght 2 and elements of length 4 ,...
+		
+		**until the merged list size is size of the given list.
+				
+		example :
+	given list:		[1] [2] [3] [4] [5] [6] [7] [8]		
+	1 call:		[1,2] [3,4] , [5,6] ,[7,8]
+	2 call:		[1,2,3,4] ,[5,6,7,8]
+	3 call:		[1,2,3,4,5,6,7,8]
+	end:
+	odd case
+	given list:		[1] [2] [3] [4] [5] [6] [7]
+	1 call			[1,2] [3,4] [5,6] [7]
+	2 call			[1,2,3,4] [5,6,7]
+	3 call			[1,2,3,4,5,6,7]
+	
+	Register usage:
+	At the end of the algorithm the list pointer is at r8
+	and the length is in r3
+	if we want them we can change them to r0,r1
+	it is kept at particular places for convinience as the code outputs to stdout .
+		
+
+		Test Cases and their Results:
+		
+		input 1: length of list
+		input 2 : list entries (combined input)
+		input 3 : comparision mode (0 for case sensitive 1 for case insensitive)
+		inout 4 : Duplicate removal option (0 for No 1 for Yes).
+		
+		Test 1:
+			5
+			d,c,a,b,e
+			0
+			0
+			
+			output: [a,b,c,d,e]
+		Test 2 :
+			7
+			a,t,g,b,c,d,e
+			0
+			0
+			output: [a,b,c,d,e,g,t]
+		Test 3:
+			1
+			a
+			0
+			0
+			[a]
+		Test 4 :
+			9
+			a,s,f,A,g,B,e,R,T
+			0
+			0
+			output: [A,B,R,T,a,e,f,g,s]
+		Test 5:
+			7
+			a,a,s,d,d,g,e
+			0
+			1
+			output: [a,d,e,g,s]
+		Test 6:
+			7
+			a,a,s,d,d,g,e
+			0
+			0
+			output: [a,a,d,d,e,g,s]
+		Test 7:
+			6
+			a,a,A,a,A,A
+			1
+			1
+			output: [a]
+		Test 8:
+			6
+			a,a,A,a,A,A
+			0
+			1
+			output: [A,a]
+		Test 9:
+			5
+			D,F,a,C,R
+			0
+			1
+			output : [C,D,F,R,a]
+		Test 10:
+			5
+			D,F,a,C,R
+			1
+			1
+			output : [a,C,D,F,R]
+		Test 11:
+			3
+			s,R,e
+			1
+			0
+			output : [e,R,s]
+		Test 12:
+			10
+			a,S,D,A,d,e,g,t,h,H
+			1
+			1
+			output: [A,d,e,g,H,S,t]
+		Test 13:
+			10
+			a,d,f,g,A,A,F,r,T,T
+			0
+			0
+			output: [A,A,F,T,T,a,d,f,g,r]		
+		Test 14
+			5
+			Hi,my,name,is,JP
+			0
+			1
+			output: [Hi,JP,is,my,name]
+		Test 15
+			4
+			Hello,HELLO,hello,HeLlO
+			1
+			1`
+			output: [HeLlO]	
+										
+											
+												***END OF THE REPORT***
+												
+												
+
